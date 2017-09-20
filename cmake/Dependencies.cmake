@@ -6,14 +6,9 @@ set(Caffe_COMPILE_OPTIONS "")
 
 # ---[ Petuum
 list(APPEND Caffe_COMPILE_OPTIONS PUBLIC "-std=c++11")
-if(USE_PS_THIN)
-    add_subdirectory(ps-thin)
-    list(APPEND Caffe_INCLUDE_DIRS PUBLIC ${PS_INCLUDE_DIRS})
-    list(APPEND Caffe_COMPILE_OPTIONS PUBLIC "-DUSE_PS_THIN")
-else()
-    add_subdirectory(ps)
-    list(APPEND Caffe_INCLUDE_DIRS PUBLIC ${PS_INCLUDE_DIRS})
-endif()
+message(STATUS "Using ps parameter server")
+add_subdirectory(ps)
+list(APPEND Caffe_INCLUDE_DIRS PUBLIC ${PS_INCLUDE_DIRS})
 
 # ---[ Boost
 find_package(Boost 1.54 REQUIRED COMPONENTS system thread filesystem)
