@@ -372,6 +372,7 @@ void Solver<Dtype>::Solve(const char* resume_file) {
     petuum::PSTableGroup::Clock();
     ++clock_counter_;
   }
+  JoinSyncThreads();
   // Always save a snapshot after optimization, unless overridden by setting
   // snapshot_after_train := false.
   if (param_.snapshot_after_train()) { Snapshot(); }

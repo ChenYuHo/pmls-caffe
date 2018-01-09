@@ -265,9 +265,15 @@ void CaffeEngine<Dtype>::Start() {
   string weights_path = context.get_string("weights");
   string net_outputs_prefix = context.get_string("net_outputs");
 
+<<<<<<< HEAD
   shared_ptr<caffe::Solver<Dtype> >
     solver(caffe::GetSolver<Dtype>(param_, &layer_blobs_global_idx_, 
            thread_id)); 
+=======
+  shared_ptr<caffe::Solver<Dtype>> solver;
+  solver.reset(caffe::GetSolver<Dtype>(param_, &layer_blobs_global_idx_,
+              thread_id));
+>>>>>>> e57a15e... Get statistics macros working for ps-thin and caffe  (#3)
 
   if (snapshot_path.size()) {
     if (client_id == 0 && thread_id == 0) {
@@ -288,6 +294,8 @@ void CaffeEngine<Dtype>::Start() {
   if (client_id == 0 && thread_id == 0) {
     solver->PrintNetOutputs(net_outputs_prefix + ".netoutputs");
   }
+
+  solver.reset();
 
   petuum::PSTableGroup::DeregisterThread();
 }
